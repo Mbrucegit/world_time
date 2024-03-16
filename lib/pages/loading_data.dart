@@ -17,7 +17,7 @@ class _LoadingState extends State<Loading> {
 
   @override
   void initState() {
-    getData();
+    // getData();
   }
 
 
@@ -25,7 +25,9 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     print("Build widget fired.");
     return Scaffold(
-      body: Text('Loading Da2ta Page')
-    );
+      body: SafeArea(
+          child:Text('Loading Data Page')
+      ),
+      );
   }
 }

@@ -15,7 +15,7 @@ class _HomeState extends State<Home> {
       body: SafeArea(
           child:Column(
             children: <Widget>[
-            ElevatedButton(
+            TextButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/location');
                 },
