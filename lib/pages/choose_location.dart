@@ -12,37 +12,22 @@ class ChooseLocation extends StatefulWidget {
 
 class _ChooseLocationState extends State<ChooseLocation> {
 
-  int counter = 0;
-  void getData() async {
-    //simulate network request for a user name
-    String username = await Future.delayed(const Duration(seconds: 1),(){
-      print('username function');
-      return 'Yoshi';
-    });
-
-    //simulate network request for the bio of user name
-    await Future.delayed(const Duration(seconds: 2), (){
-        return 'A second has passed for $username';
-    });
-    print('$username');
-  }
+  // int counter = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('initState function ran;');
-    getData();
-    print('initState function ran2;');
-
+    print('initState fired.');
   }
 
 
   @override
   Widget build(BuildContext context) {
     print('build function ran');
+    print('state changed');
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.blue[ 600],
         title: Text('Choose a Location'),
@@ -50,20 +35,18 @@ class _ChooseLocationState extends State<ChooseLocation> {
         elevation: 30,
       ),
       body: TextButton(
-        onPressed: (){
+        style: ButtonStyle(
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+        onPressed: () {
           setState(() {
-            counter += 1;
+            // counter += 1;
           });
         },
         child: Text(
-            'Click on $counter',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 30,
-            ),
-
-
-
+            'Click to add counter \{$counter}',
+          style: TextStyle(
+            fontSize: 20,
+          ),
         ),
       ),
     );
