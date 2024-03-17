@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class WorldTime{
 
@@ -34,8 +35,11 @@ class WorldTime{
       DateTime now = DateTime.parse(datetime);
       now = now.add(Duration(hours: int.parse(offset)));
 
+      time = DateFormat.jm().format(now);
+
+
       // Set the time property
-      time = now.toString();
+      // time = now.toString();
       //TODO delete the print command below.
       // print(now);
       // print('time printed $now');
