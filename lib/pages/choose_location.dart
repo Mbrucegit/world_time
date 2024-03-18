@@ -1,7 +1,7 @@
 import 'dart:ffi';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:world_time/services/world_time.dart';
 
 class ChooseLocation extends StatefulWidget {
   const ChooseLocation({super.key});
@@ -12,56 +12,67 @@ class ChooseLocation extends StatefulWidget {
 
 class _ChooseLocationState extends State<ChooseLocation> {
 
-  void getData() async{
+  List<WorldTime> locations = [
+    WorldTime(url: 'Europe/London', location: 'London', flag: 'uk.png'),
+    WorldTime(url: 'Europe/Berlin', location: 'Athens', flag: 'greece.png'),
+    WorldTime(url: 'Africa/Cairo', location: 'Cairo', flag: 'egypt.png'),
+    WorldTime(url: 'Africa/Nairobi', location: 'Nairobi', flag: 'kenya.png'),
+    WorldTime(url: 'America/Chicago', location: 'Chicago', flag: 'usa.png'),
+    WorldTime(url: 'America/New_York', location: 'New York', flag: 'usa.png'),
+    WorldTime(url: 'Asia/Seoul', location: 'Seoul', flag: 'south_korea.png'),
+    WorldTime(url: 'Asia/Jakarta', location: 'Jakarta', flag: 'indonesia.png'),
+  ];
 
-    //simulate network request
-    //add await to complete the function before the next line of code
-    String username = await Future.delayed(Duration(seconds: 3), (){
-      return 'Yoshi';
-    });
-
-    await Future.delayed(Duration(seconds: 3), (){
-      print('username is $username');
-      print('Statement');
+  void updateTime(index) async {
+    WorldTime instance = locations[index];
+    await instance.getTime();
+    Navigator.pop(context, {
+      'location': instance.location,
+      'flag': instance.flag,
+      'time': instance.time,
+      'isDaytime': instance.isDaytime,
     });
   }
-  // int counter = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('init function ran');
-    getData();
+    // print('init function ran');
   }
-
 
   @override
   Widget build(BuildContext context) {
     print('state changed');
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.blue[ 600],
-        title: Text('Choose a Location'),
+        backgroundColor: Colors.blue,
+        title: Text('Choose a location'),
         centerTitle: true,
-        elevation: 30,
+        elevation: 0,
       ),
-      body: TextButton(
-        style: ButtonStyle(
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-        onPressed: () {
-          setState(() {
-            getData();
-          });
-        },
-        child: Text(
-            'Click to add counter',
-          style: TextStyle(
-            fontSize: 20,
-          ),
-        ),
-      ),
+      body: ListView.builder(
+          itemCount: locations.length,
+          itemBuilder: (context, index){
+            return Card(
+              child: ListTile(
+                onTap: () {
+                  updateTime(index);
+                },
+                title: Text(
+                    locations[index].location,
+                  style: TextStyle(
+                    fontSize: 30,
+                ),
+                ),
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage('assets/${locations[index].flag}'),
+                ),
+              ),
+            );
+
+          }),
     );
   }
 }
